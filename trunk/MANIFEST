@@ -1,0 +1,11 @@
+Build.PL
+Changes
+lib/XAS/Model.pm
+lib/XAS/Model/DBM.pm
+lib/XAS/Model/Database.pm
+MANIFEST			This list of files
+README
+t/00-load.t
+t/boilerplate.t
+t/manifest.t
+t/pod.t
