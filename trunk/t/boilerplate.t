@@ -3,7 +3,7 @@
 use 5.006;
 use strict;
 use warnings;
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 sub not_in_file_ok {
     my ($filename, %regex) = @_;
@@ -49,6 +49,7 @@ TODO: {
     "placeholder date/time"       => qr(Date/time)
   );
 
+  module_boilerplate_ok('lib/XAS/Apps/Database/Schema.pm');
   module_boilerplate_ok('lib/XAS/Model/Database.pm');
   module_boilerplate_ok('lib/XAS/Model/DBM.pm');
   module_boilerplate_ok('lib/XAS/Model.pm');

@@ -1,5 +1,7 @@
 Build.PL
+bin/xas-create-schema
 Changes
+lib/XAS/Apps/Database/Schema.pm
 lib/XAS/Model.pm
 lib/XAS/Model/DBM.pm
 lib/XAS/Model/Database.pm
