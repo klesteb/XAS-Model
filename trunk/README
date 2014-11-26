@@ -20,7 +20,7 @@ If you are DEB based, then debian build files has been provided.
 If you have a debian build environment, then you can do the following:
 
     # debuild -uc -us
-    # dpkg -i ../libxas-model_0.01-1_all.deb
+    # dpkg -i ../libxas-model-perl_0.01-1_all.deb
 
 If you are RPM based, then a spec file has been included. If you have a
 rpm build environment, then you can do the following:
