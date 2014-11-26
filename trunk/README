@@ -4,8 +4,8 @@ XAS is middleware for Perl. It provides standardized methods, modules
 and philosophy for constructing large distributed applications. This 
 system is based on production level code.
 
-This is the database abstraction layer that builds upon XAS. They provide 
-a consistent way to work with databases.
+This is the database abstraction layer that builds upon XAS. This
+provides a consistent way to work with databases.
 
 INSTALLATION
 
