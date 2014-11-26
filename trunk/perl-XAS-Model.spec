@@ -10,8 +10,10 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Test::More)
-Requires:       perl(XAS) >= 0.07
-Requires:       perl(DBIx::Class) >= 0.0
+Requires:       perl(XAS) >= 0.08
+Requires:       perl(DBIx::Class) >= 0.08196
+Requires        perl(DBIx::Class::Schema::Config) >= 0.001010
+Requires        perl(DBIx::Class::OptimisticLocking) >= 0.02
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description
@@ -43,13 +45,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc Changes README
 %{perl_vendorlib}/*
-%config(noreplace) /etc/sysconfig/xas-spooler
-%config(noreplace) /etc/logrotate.d/xas-spooler
-%config(noreplace) /etc/xas/xas-spooler.ini
 /usr/share/man/*
-/usr/sbin/*
-/etc/init.d/*
-/etc/xas/*
+/usr/bin/*
 
 %changelog
 * Tue Mar 18 2014 "kesteb <kevin@kesteb.us>" 0.01-1
