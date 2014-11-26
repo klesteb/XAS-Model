@@ -6,6 +6,7 @@ my $requires = {
     'XAS' => '0.08',
     'DBIx::Class' => '0.08196',
     'DBIx::Class::Schema::Config' => '0.001010',
+    'DBIx::Class::OptimisticLocking' => '0.02',
 };
     
 my $sysconfig = ( -e '/etc/default' ) ? '/etc/default' : '/etc/sysconfig';
@@ -286,12 +287,12 @@ my $builder = $class->new(
     requires           => $requires
 );
 
-$builder->add_build_element('etc');
+#$builder->add_build_element('etc');
 $builder->add_build_element('msg');
-$builder->add_build_element('sbin');
-$builder->add_build_element('initd');
-$builder->add_build_element('sysconf');
-$builder->add_build_element('logrotated');
+#$builder->add_build_element('sbin');
+#$builder->add_build_element('initd');
+#$builder->add_build_element('sysconf');
+#$builder->add_build_element('logrotated');
 
 $builder->create_build_script();
 
