@@ -1,5 +1,8 @@
 Build.PL
 bin/xas-create-schema
+bin/xas-pg-extract-data
+bin/xas-pg-extract-global
+bin/xas-pg-remove-data
 Changes
 lib/XAS/Apps/Database/Schema.pm
 lib/XAS/Model.pm
