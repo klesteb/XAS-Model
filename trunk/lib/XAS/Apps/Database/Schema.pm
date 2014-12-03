@@ -1,12 +1,15 @@
 package XAS::Apps::Database::Schema;
 
-use XAS::Model::Database;
+use XAS::Model::Database
+  schema => 'XAS::Model::Database',
+  tables => ':all'
+;
 
 use XAS::Class
   debug     => 0,
   version   => '0.02',
   base      => 'XAS::Lib::App',
-  accessors => 'dbtype revision directory schema',
+  accessors => 'dbtype revision directory database db',
 ;
 
 # ----------------------------------------------------------------------
@@ -16,7 +19,9 @@ use XAS::Class
 sub setup {
     my $self = shift;
 
-    $self->{schema} = XAS::Model::Database->opendb('database');
+    my $database = $self->database;
+
+    $self->{db} = XAS::Model::Database->opendb($database);
 
 }
 
@@ -27,7 +32,7 @@ sub main {
 
     $self->log->info('starting up');
 
-    $self->schema->create_ddl_dir(
+    $self->db->create_ddl_dir(
         [$self->dbtype],
         $self->revision,
         $self->directory,
@@ -43,11 +48,13 @@ sub options {
     $self->{dbtype}    = 'SQLite';
     $self->{revision}  = '0.01';
     $self->{directory} = './sql/';
+    $self->{database}  = 'database';
 
     return {
         'dbtype=s'    => \$self->{dbtype},
         'revision=s'  => \$self->{revision},
         'directory=s' => \$self->{directory},
+        'database=s'  => \$self->{database},
     };
 
 }

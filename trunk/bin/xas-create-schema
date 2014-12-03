@@ -40,6 +40,8 @@
 use lib "../lib";
 use XAS::Apps::Database::Schema;
 
+$SQL::Translator::DEBUG = 1;
+
 main: {
 
     my $app = XAS::Apps::Database::Schema->new(

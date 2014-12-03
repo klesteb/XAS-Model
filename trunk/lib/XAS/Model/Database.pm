@@ -10,18 +10,15 @@ use XAS::Class
   version    => $VERSION,
   base       => 'DBIx::Class::Schema::Config XAS::Base',
   import     => 'class CLASS',
-  constants  => 'DELIMITER PKG REFS ONCE',
+  constants  => 'DELIMITER PKG REFS ONCE HASH ARRAY',
   filesystem => 'File',
   exports => {
     hooks => {
-      schema => \&schema,
-      table  => \&tables,
-      tables => \&tables,
+      schema => [ \&schema, 1 ],
+      table  => [ \&tables, 1 ],
+      tables => [ \&tables, 1 ],
     }
   },
-  vars => {
-    TABLES => {}
-  }
 ;
 
 #use Data::Dumper;
@@ -97,36 +94,26 @@ CLASS->exception_action(\&XAS::Model::Database::dbix_exceptions);
 # ---------------------------------------------------------------------
 
 sub tables {
-    my ($class, $target, $symbol, $values) = @_;
+    my $self   = shift;
+    my $target = shift;
+    my $symbol = shift;
+    my $tables = @_ == 1 ? shift : [ @_ ];
 
-    my $value  = shift(@$values);
-    my @tables = split(DELIMITER, $value);
+	my $TABLES = $self->class->var('TABLES');
 
-    foreach my $table (@tables) {
+    $tables = [ split(DELIMITER, $tables) ] unless (ref($tables) eq ARRAY);
+
+    foreach my $table (@$tables) {
 
         if ($table ne ':all') {
 
-            if (defined($TABLES->{$table})) {
-
-                no strict REFS;
-                no warnings ONCE;
-
-                *{$target.PKG.$table} = sub {$TABLES->{$table}};
-
-            } else {
-
-                $class->throw("$table is not exported by $class");
-
-            }
+            $self->class->constant($table => $TABLES->{$table});
 
         } else {
 
-            while (my ($key, $value) = each(%$TABLES)) {
+            while (my ($key, $value) = each(%{$TABLES->{tables}})) {
 
-                no strict REFS;
-                no warnings ONCE;
-
-                *{$target.PKG.$key} = sub {$value};
+                $self->class->constant($key => $value);
 
             }
 
@@ -136,39 +123,47 @@ sub tables {
 
     }
 
+    return $self;
+
 }
 
 sub schema {
-    my ($class, $target, $symbol, $values) = @_;
+    my $self    = shift;
+    my $target  = shift;
+    my $symbol  = shift;
+    my $schemas = @_ == 1 ? shift : [ @_ ];
 
-    my $name;
-    my $begin;
-    my @parts;
-    my $modules;
-    my $namespace = shift(@$values);
-    my $pattern = $namespace . '::';
+    $schemas = [ split(DELIMITER, $schemas) ] unless (ref($schemas) eq ARRAY);
 
-    # loading our schema
+    foreach my $schema (@$schemas) {
 
-    CLASS->load_namespaces(result_namespace => "+$namespace");
+        my $pattern = $schema . '::';
 
-    # building our TABLES hash
+        # loading our schema
 
-    $modules = Class::Inspector->subclasses('UNIVERSAL');
+        CLASS->load_namespaces(result_namespace => "+$schema");
 
-    foreach my $module (@$modules) {
+        # building our TABLES hash
 
-        if ($module =~ m/$pattern/) {
+        my $modules = Class::Inspector->subclasses('UNIVERSAL');
 
-            @parts = split('::', $module);
-            $begin = scalar(@parts) - 1;
-            $name = join('', splice(@parts, $begin, $#parts));
+        foreach my $module (@$modules) {
 
-            $TABLES->{$name} = $module;
+            if ($module =~ m/$pattern/) {
+
+                my @parts = split('::', $module);
+                my $begin = scalar(@parts) - 1;
+                my $name = join('', splice(@parts, $begin, $#parts));
+
+                $self->class->hash_value('TABLES', $name, $module);
+
+            }
 
         }
 
     }
+
+    return $self;
 
 }
 
