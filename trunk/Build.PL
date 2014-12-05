@@ -25,9 +25,13 @@ if ($^O eq 'MSWin32') {
     my $path = defined($ENV{XAS_ROOT}) ? $ENV{XAS_ROOT} : 'C:\\xas';
 
     my $install_path = {
-        etc    => $path . '\\etc',
-        sbin   => $path . '\\sbin',
-        script => $path . '\\bin',
+        etc           => $path . '\\etc',
+        sbin          => $path . '\\sbin',
+        script        => $path . '\\bin',
+        sysconfig     => $path . '\\etc\\sysconfig',
+        'init.d'      => $path . '\\etc\\init.d',
+        'profile.d'   => $path . '\\etc\\profile.d',
+        'logrotate.d' => $path . '\\etc\\logrotate.d'
     };
 
 }
@@ -159,8 +163,8 @@ my $class = Module::Build->subclass(code => <<'EOC');
         while (my ($from, $to) = each %$files) {
 
             $to = catfile('blib', $to);
-            $self->make_executable($from);
-            $result = $self->copy_if_modified(from => $from, to => $to);
+            $result = $self->copy_if_modified(from => $from, to => $to) or next;
+            $self->make_executable($result);
 
         }
 
@@ -200,8 +204,8 @@ my $class = Module::Build->subclass(code => <<'EOC');
         while (my ($from, $to) = each %$files) {
 
             $to = catfile('blib', $to);
-            $self->make_executable($from);
-            $result = $self->copy_if_modified(from => $from, to => $to);
+            $result = $self->copy_if_modified(from => $from, to => $to) or next;
+            $self->make_executable($result);
 
         }
 
