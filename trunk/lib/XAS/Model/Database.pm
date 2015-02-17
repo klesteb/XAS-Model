@@ -14,9 +14,9 @@ use XAS::Class
   filesystem => 'File',
   exports => {
     hooks => {
-      schema => [ \&schema, 1 ],
-      table  => [ \&tables, 1 ],
-      tables => [ \&tables, 1 ],
+      schema => [ \&_schema, 1 ],
+      table  => [ \&_tables, 1 ],
+      tables => [ \&_tables, 1 ],
     }
   },
 ;
@@ -93,11 +93,37 @@ CLASS->exception_action(\&XAS::Model::Database::dbix_exceptions);
 # Hooks
 # ---------------------------------------------------------------------
 
-sub tables {
+sub _tables {
     my $self   = shift;
     my $target = shift;
     my $symbol = shift;
     my $tables = @_ == 1 ? shift : [ @_ ];
+
+    $self->tables($tables);
+
+    return $self;
+
+}
+
+sub _schema {
+    my $self    = shift;
+    my $target  = shift;
+    my $symbol  = shift;
+    my $schemas = @_ == 1 ? shift : [ @_ ];
+
+    $self->schema($schemas);
+
+    return $self;
+
+}
+
+# ---------------------------------------------------------------------
+# Methods
+# ---------------------------------------------------------------------
+
+sub tables {
+    my $self = shift;
+    my ($tables) = $self->validate_params(\@_, [1]);
 
 	my $TABLES = $self->class->var('TABLES');
 
@@ -123,15 +149,11 @@ sub tables {
 
     }
 
-    return $self;
-
 }
 
-sub schema {
-    my $self    = shift;
-    my $target  = shift;
-    my $symbol  = shift;
-    my $schemas = @_ == 1 ? shift : [ @_ ];
+sub schemas {
+    my $self = shift;
+    my ($schemas) = $self->validate_params(\@_, [1]);
 
     $schemas = [ split(DELIMITER, $schemas) ] unless (ref($schemas) eq ARRAY);
 
@@ -163,13 +185,7 @@ sub schema {
 
     }
 
-    return $self;
-
 }
-
-# ---------------------------------------------------------------------
-# Methods
-# ---------------------------------------------------------------------
 
 sub filter_loaded_credentials {
     my ($class, $config, $connect_args) = @_;
