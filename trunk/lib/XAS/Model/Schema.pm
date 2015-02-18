@@ -78,7 +78,11 @@ BEGIN {
 # ---------------------------------------------------------------------
 
 sub filter_loaded_credentials {
-    my ($class, $config, $connect_args) = @_;
+    my $class        = shift;
+    my $config       = shift;
+    my $connect_args = shift;
+
+    $config = {} if ($config eq '');
 
     $config->{dbi_attr}->{AutoCommit} = 1;
     $config->{dbi_attr}->{PrintError} = 0;

@@ -45,6 +45,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc Changes README
 %{perl_vendorlib}/*
+%config(noreplace) /etc/xas/database.ini
 /usr/share/man/*
 /usr/bin/*
 

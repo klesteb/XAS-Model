@@ -14,6 +14,7 @@
 # PARAMETERS:  
 #              --dbtype    type of database to create
 #              --revision  the revision for the schema
+#              --schema    the database schema to load
 #              --directory the directory to place the schema file
 #              --help      prints out a helpful help message
 #              --manual    prints out the procedures manual
@@ -40,8 +41,6 @@
 use lib "../lib";
 use XAS::Apps::Database::Schema;
 
-$SQL::Translator::DEBUG = 1;
-
 main: {
 
     my $app = XAS::Apps::Database::Schema->new(
@@ -64,6 +63,7 @@ xas-create-schema [--help] [--debug] [--manual] [--version] [--dbtype]
 
  options:
    --dbtype     the type of database system  
+   --schema     the database schema to load
    --revision   the revison for the schema
    --directory  the directory to place the schema file
    --help       outputs simple help text
@@ -90,6 +90,10 @@ The type of database. This can be one of the following:
  MySQL
 
 Or any other SQL::Translater database name.
+
+=item B<--schema>
+
+The database schema to load. Defaults to "XAS::Model::Database::Testing".
 
 =item B<--revision>
 
