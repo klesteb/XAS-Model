@@ -8,6 +8,11 @@ lib/XAS/Apps/Database/Schema.pm
 lib/XAS/Model.pm
 lib/XAS/Model/DBM.pm
 lib/XAS/Model/Database.pm
+lib/XAS/Model/Schema.pm
+lib/XAS/Model/Database/Testing/Result/Artist.pm
+lib/XAS/Model/Database/Testing/Result/CD.pm
+lib/XAS/Model/Database/Testing/Result/Track.pm
+lib/XAS/Model/Database/Testing/ResultSet/Artist.pm
 MANIFEST			This list of files
 README
 t/00-load.t
