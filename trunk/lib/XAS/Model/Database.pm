@@ -2,14 +2,13 @@ package XAS::Model::Database;
 
 our $VERSION = '0.01';
 
-use XAS::Exception;
 use Class::Inspector;
+use XAS::Model::Schema;
 
 use XAS::Class
   debug      => 0,
   version    => $VERSION,
-  base       => 'DBIx::Class::Schema::Config XAS::Base',
-  import     => 'class CLASS',
+  base       => 'XAS::Base',
   constants  => 'DELIMITER PKG REFS ONCE HASH ARRAY',
   filesystem => 'File',
   exports => {
@@ -21,73 +20,9 @@ use XAS::Class
   },
 ;
 
-#use Data::Dumper;
-
-# ---------------------------------------------------------------------
-# Define DBIx::Class::Schema::Config configuration file locations
-#
-# Format of the configuration file is as follows:
-#
-# [progress]             - corresponds to what is given to opendb()
-# dbname = monitor       - name of the database
-# dsn = SQLite           - corresponds to the dbd driver
-# username = username    - the user context to use
-# password = password    - the password for that context
-#
-# When using ODBC with a user level DSN or a dynamic connection, you
-# should add the following items:
-#
-# driver = SQL Server
-# server = localhost,1234
-#
-# When using PostgresSQL (Pg), you can add the following items:
-#
-# port = 5432
-# host = localhost
-# sslmode = something
-# options = something
-#
-# Or a service name, which is not compatiable with the above.
-#
-# service = service name
-# 
-# There can be multiple stanzas, the first one that matches is used.
-# ---------------------------------------------------------------------
-
-{
-    # -----------------------------------------------------------------
-    # Defining where our database.ini file could be
-    # -----------------------------------------------------------------
-
-    my $path;
-
-    if ($^O eq "MSWin32") {
-
-        $path = defined($ENV{XAS_ROOT}) ? $ENV{XAS_ROOT} : 'C:\\xas';
-
-        CLASS->config_paths([(
-            File($path, 'etc', 'database')->path,
-            File($ENV{USERPROFILE}, 'database')->path,
-        )]);
-
-    } else {
-
-        $path = defined($ENV{XAS_ROOT}) ? $ENV{XAS_ROOT} : '/';
-
-        CLASS->config_paths([(
-            File($path, 'etc', 'xas', 'database')->path,
-            File($ENV{HOME}, '.database')->path,
-        )]);
-
-    }
-
-}
-
-# ---------------------------------------------------------------------
-# Defining our DBIx::Class exception handler
-# ---------------------------------------------------------------------
-
-CLASS->exception_action(\&XAS::Model::Database::dbix_exceptions);
+our $KEYS;
+  
+use Data::Dumper;
 
 # ---------------------------------------------------------------------
 # Hooks
@@ -111,35 +46,40 @@ sub _schema {
     my $symbol  = shift;
     my $schemas = @_ == 1 ? shift : [ @_ ];
 
-    $self->schema($schemas);
+    $self->schemas($schemas);
 
     return $self;
 
 }
 
 # ---------------------------------------------------------------------
-# Methods
+# Public Methods
 # ---------------------------------------------------------------------
 
 sub tables {
     my $self = shift;
     my ($tables) = $self->validate_params(\@_, [1]);
 
-	my $TABLES = $self->class->var('TABLES');
-
     $tables = [ split(DELIMITER, $tables) ] unless (ref($tables) eq ARRAY);
+
+    my ($pkg) = caller(4);
+      
+    no strict "refs";               # to register new methods in package
+    no warnings;                    # turn off warnings
 
     foreach my $table (@$tables) {
 
+        # building constants in the calling package.
+
         if ($table ne ':all') {
 
-            $self->class->constant($table => $TABLES->{$table});
+            *{$pkg.PKG.$table} = sub { $KEYS->{$table}; };
 
         } else {
 
-            while (my ($key, $value) = each(%{$TABLES->{tables}})) {
+            while (my ($key, $value) = each(%$KEYS)) {
 
-                $self->class->constant($key => $value);
+                *{$pkg.PKG.$key} = sub { $value; };
 
             }
 
@@ -159,17 +99,21 @@ sub schemas {
 
     foreach my $schema (@$schemas) {
 
-        my $pattern = $schema . '::';
-
         # loading our schema
 
-        CLASS->load_namespaces(result_namespace => "+$schema");
+        XAS::Model::Schema->load_namespaces(
+            result_namespace    => "+$schema" . "::Result",
+            resultset_namespace => "+$schema" . "::ResultSet",
+        );
 
-        # building our TABLES hash
+        # building our keys
 
+        my $pattern = $schema . '::';
         my $modules = Class::Inspector->subclasses('UNIVERSAL');
 
         foreach my $module (@$modules) {
+
+            next if ($module =~ /ResultSet/);
 
             if ($module =~ m/$pattern/) {
 
@@ -177,7 +121,7 @@ sub schemas {
                 my $begin = scalar(@parts) - 1;
                 my $name = join('', splice(@parts, $begin, $#parts));
 
-                $self->class->hash_value('TABLES', $name, $module);
+                $KEYS->{$name} = $module;
 
             }
 
@@ -187,94 +131,9 @@ sub schemas {
 
 }
 
-sub filter_loaded_credentials {
-    my ($class, $config, $connect_args) = @_;
-
-    $config->{dbi_attr}->{AutoCommit} = 1;
-    $config->{dbi_attr}->{PrintError} = 0;
-    $config->{dbi_attr}->{RaiseError} = 1;
-
-    if ($config->{dsn} eq 'SQLite') {
-
-        $config->{dbi_attr}->{sqlite_use_immediate_transaction} = 1;
-        $config->{dbi_attr}->{sqlite_see_if_its_a_number} = 1;
-        $config->{dbi_attr}->{on_connect_call} = 'use_foreign_keys';
-
-        $config->{dsn} = "dbi:$config->{dsn}:dbname=$config->{dbname}";
-
-    } elsif ($config->{dsn} eq 'ODBC') {
-
-        # http://dolio.lh.net/~apw/doc/HOWTO/HOWTO-Connect_Perl_to_SQL_Server.pdf
-        #
-        # a user level DSN or a dynamic connection needs the following:
-        #
-        # dbi:ODBC:Driver={driver};Server=server;Database=dbname
-        #
-        # a system level DSN needs the following:
-        #
-        # dbi:ODBC:dbname
-        # 
-
-        if (defined($config->{driver})) {
-
-            $config->{dsn} = sprintf(
-                "dbi:%s:Driver={%s};Database=%s;Server=%s",
-                $config->{dsn}, $config->{driver},
-                $config->{dbname}, $config->{server}
-            );
-
-        } else {
-
-            $config->{dsn} = "dbi:$config->{dsn}:$config->{dbname}";
-   
-        }
-
-    } elsif ($config->{dsn} eq 'Pg') {
-
-        unless (defined($config->{service})) {
-
-            $config->{dsn}  = "dbi:$config->{dsn}:dbname=$config->{dbname}";
-            $config->{dsn} .= ";host=$config->{host}" if (defined($config->{host}));
-            $config->{dsn} .= ";port=$config->{port}" if (defined($config->{port}));
-            $config->{dsn} .= ";options=$config->{options}" if (defined($config->{options}));
-            $config->{dsn} .= ";sslnode=$config->{sslmode}" if (defined($config->{sslmode}));
-
-        } else {
-
-            $config->{dsn} = "dbi:$config->{dsn}:service=$config->{service}";
-
-        }
-
-    } else {
-
-        $config->{dsn} = "dbi:$config->{dsn}:dbname=$config->{dbname}";
-
-    }
-
-    return $config;
-
-}
-
-sub opendb {
-    my $class = shift;
-
-    return $class->connect(@_);
-
-}
-
-sub dbix_exceptions {
-    my $error = shift;
-
-    $error =~ s/dbix.class error - //;
-
-    my $ex = XAS::Exception->new(
-        type => 'dbix.class',
-        info => sprintf("%s", $error)
-    );
-
-    $ex->throw;
-
-}
+# ---------------------------------------------------------------------
+# Private Methods
+# ---------------------------------------------------------------------
 
 1;
 
@@ -286,13 +145,14 @@ XAS::Model::Database - A class to load database schemas
 
 =head1 SYNOPSIS
 
+  use XAS::Model::Schema;
   use XAS::Model::Database
     schema => 'ETL::Model::Database',
     table  => 'Master';
 
   try {
 
-      $schema = XAS::Model::Database->opendb('database');
+      $schema = XAS::Model::Schema->opendb('database');
 
       my @rows = Master->search($schema);
 
