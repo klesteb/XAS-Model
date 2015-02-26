@@ -139,6 +139,26 @@ sub load_records {
 
 }
 
+sub delete_records {
+    my $class  = shift;
+    my $schema = shift;
+
+    $schema->txn_do(sub { 
+
+        if (my $rs = $class->search($schema, @_)) {
+
+            while (my $row = $rs->next) {
+
+                $row->delete();
+
+            }
+
+        }
+
+    });
+
+}
+
 sub read_record {
     my $class    = shift;
     my $schema   = shift;
@@ -518,6 +538,27 @@ Other parameters that are passed directly to the DBIx::Class populate() method.
 This method will load records into an array of hashes based on passed 
 criteria. Any data conversion is done automatically. It takes two or 
 more parameters:
+
+=over 4
+
+=item B<$class>
+
+The DBIx::Class model name. Usually a constant defined within XAS::Model::Database.
+
+=item B<$schema> 
+
+The DBIx::Class schema handle returned from opendb() in XAS::Model::Database.
+
+=item B<...>
+
+Other parameters that are passed directly to the search() method.
+
+=back
+
+=head2 delete_records($class, $schema, ...)
+
+This method will delete records based on the passed criteria. 
+It takes two or more parameters:
 
 =over 4
 

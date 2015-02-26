@@ -4,12 +4,13 @@ our $VERSION = '0.01';
 
 use Class::Inspector;
 use XAS::Model::Schema;
+use Params::Validate qw/SCALAR ARRAYREF/;
 
 use XAS::Class
   debug      => 0,
   version    => $VERSION,
   base       => 'XAS::Base',
-  constants  => 'DELIMITER PKG REFS ONCE HASH ARRAY',
+  constants  => 'DELIMITER PKG REFS ARRAY',
   filesystem => 'File',
   exports => {
     hooks => {
@@ -22,7 +23,7 @@ use XAS::Class
 
 our $KEYS;
   
-use Data::Dumper;
+#use Data::Dumper;
 
 # ---------------------------------------------------------------------
 # Hooks
@@ -32,9 +33,9 @@ sub _tables {
     my $self   = shift;
     my $target = shift;
     my $symbol = shift;
-    my $tables = @_ == 1 ? shift : [ @_ ];
+    my $tables = shift;
 
-    $self->tables($tables);
+    $self->tables($tables, 4);
 
     return $self;
 
@@ -44,7 +45,7 @@ sub _schema {
     my $self    = shift;
     my $target  = shift;
     my $symbol  = shift;
-    my $schemas = @_ == 1 ? shift : [ @_ ];
+    my $schemas = shift;
 
     $self->schemas($schemas);
 
@@ -56,15 +57,25 @@ sub _schema {
 # Public Methods
 # ---------------------------------------------------------------------
 
+sub table {
+    my $self = shift;
+
+    $self->tables(@_);
+
+}
+
 sub tables {
     my $self = shift;
-    my ($tables) = $self->validate_params(\@_, [1]);
+    my ($tables, $depth) = $self->validate_params(\@_, [
+        { type     => SCALAR | ARRAYREF },
+        { optional => 1, default => 3 },
+    ]);
 
     $tables = [ split(DELIMITER, $tables) ] unless (ref($tables) eq ARRAY);
 
-    my ($pkg) = caller(4);
-      
-    no strict "refs";               # to register new methods in package
+    my ($pkg) = caller($depth);     # presummed caller
+
+    no strict REFS;                 # to register new methods in package
     no warnings;                    # turn off warnings
 
     foreach my $table (@$tables) {
@@ -93,7 +104,9 @@ sub tables {
 
 sub schemas {
     my $self = shift;
-    my ($schemas) = $self->validate_params(\@_, [1]);
+    my ($schemas) = $self->validate_params(\@_, [
+        { type => SCALAR | ARRAYREF },
+    ]);
 
     $schemas = [ split(DELIMITER, $schemas) ] unless (ref($schemas) eq ARRAY);
 
