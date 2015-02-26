@@ -8,7 +8,7 @@ use XAS::Class
   base    => 'XAS::Base',
   mixins  => 'create find search search_like find_or_create update_or_create
               update_or_new count populate read_record create_record 
-              delete_record update_record load_records',
+              delete_record update_record load_records delete_records',
 ;
 
 # ---------------------------------------------------------------------
@@ -145,15 +145,7 @@ sub delete_records {
 
     $schema->txn_do(sub { 
 
-        if (my $rs = $class->search($schema, @_)) {
-
-            while (my $row = $rs->next) {
-
-                $row->delete();
-
-            }
-
-        }
+        $schema->resultset( $class->table_name )->search( @_ )->delete_all;
 
     });
 
