@@ -79,7 +79,7 @@ __END__
 
 =head1 NAME
 
-XAS::Apps::Database::ExtractData - This module will extract data from a postgres dump file
+XAS::Apps::Database::ExtractData - This module will extract data from a PostgreSQL dump file
 
 =head1 SYNOPSIS
 
@@ -93,7 +93,7 @@ XAS::Apps::Database::ExtractData - This module will extract data from a postgres
 
 =head1 DESCRIPTION
 
-This module will extract the "copy" statements from a postgres pg_dumpall file.
+This module will extract the "copy" statements from a PostgreSQL pg_dumpall file.
 This is based on the table name. This data is then suitable to populate
 an "empty" database that already has a schema defined. This allows 
 you to do selective restores.

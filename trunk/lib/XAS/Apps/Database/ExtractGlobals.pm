@@ -75,7 +75,7 @@ __END__
 
 =head1 NAME
 
-XAS::Apps::Database::ExtractGlobals - This module will extract globals from a postgres dump file
+XAS::Apps::Database::ExtractGlobals - This module will extract globals from a PostgreSQL dump file
 
 =head1 SYNOPSIS
 
@@ -89,14 +89,14 @@ XAS::Apps::Database::ExtractGlobals - This module will extract globals from a po
 
 =head1 DESCRIPTION
 
-This module will extract the global elements from a postgres pg_dumpall file.
+This module will extract the global elements from a PostgreSQL pg_dumpall file.
 This is based on the database name. This data is then suitable to populate
 an "empty" database that already has a schema defined. This allows 
 you to do selective restores.
 
 =head1 OPTIONS
 
-The following optiona are used to configure the module.
+The following options are used to configure the module.
 
 =head2 --file
 

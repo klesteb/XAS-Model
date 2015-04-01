@@ -26,6 +26,16 @@ databases easier.
 
 =item L<XAS::Model::DBM|XAS::Model::DBM>
 
+=item L<XAS::Model::Schema|XAS::Model::Schema>
+
+=item L<XAS::Apps::Database::ExtractData|XAS::Apps::Database::ExtractData>
+
+=item L<XAS::Apps::Database::ExtractGlobals|XAS::Apps::Database::ExtractGlobals>  
+
+=item L<XAS::Apps::Database::RemoveData|XAS::Apps::Database::RemoveData>
+
+=item L<XAS::Apps::Database::Schema|XAS::Apps::Database::Schema>
+
 =back
 
 =head1 AUTHOR

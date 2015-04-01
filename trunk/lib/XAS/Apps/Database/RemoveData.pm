@@ -71,7 +71,7 @@ __END__
 
 =head1 NAME
 
-XAS::Apps::Database::RemoveData - This module will remove data from a postgres dump file
+XAS::Apps::Database::RemoveData - This module will remove data from a PostgreSQL dump file
 
 =head1 SYNOPSIS
 
@@ -85,14 +85,14 @@ XAS::Apps::Database::RemoveData - This module will remove data from a postgres d
 
 =head1 DESCRIPTION
 
-This module will strip the "copy" statements from a postgres pg_dumpall file. 
+This module will strip the "copy" statements from a PostgreSQL pg_dumpall file. 
 Thus producing a schema that is suitable to rebuild an "empty" database.
 It inherits from L<XAS::Lib::App>. Please see that module for additional 
 documentation.
 
 =head1 OPTIONS
 
-This modules provides these additonal cli options.
+This modules provides these additional cli options.
 
 =head2 --file
 

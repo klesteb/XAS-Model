@@ -84,11 +84,11 @@ XAS::Apps::Database::Schema - Create a database schema
 =head1 DESCRIPTION
 
 This module will create a schema for the XAS database. It inherits from
-L<XAS::Lib::App>. Please see that module for additional documentation.
+L<XAS::Lib::App|XAS::Lib::App>. Please see that module for additional documentation.
 
 =head1 OPTIONS
 
-This modules provides these additonal cli options.
+This modules provides these additional cli options.
 
 =head2 --dbtype
 
@@ -98,7 +98,7 @@ The type of database. This can be one of the following:
  SQLite
  MySQL
 
-Or any other SQL::Translater database name.
+Or any other L<SQL::Translator|https://metacpan.org/pod/SQL::Translator> database name.
 
 =head2 --revision
 
