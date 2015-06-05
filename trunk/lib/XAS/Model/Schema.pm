@@ -172,3 +172,121 @@ sub opendb {
 
 1;
 
+__END__
+
+=head1 NAME
+
+XAS::Model::Schema - A class for the XAS environment
+
+=head1 SYNOPSIS
+
+ use XAS::Model::Schema;
+ use XAS::Mode::Database;
+
+ XAS::Model::Database->schema('XAS::Model::Database::Testing');
+ my $schema = XAS::Model::Schema->opendb('testing');
+
+=head1 DESCRIPTION
+
+This module loads database connection information from a file. This
+file may be located in the users home directory or in the XAS config directory.
+With the usual convention of the user specific file will override the global
+generic file. This file is named database.ini.
+
+Format of the configuration file is as follows:
+
+ [progress]             - corresponds to what is given to opendb()
+ dbname = monitor       - name of the database
+ dsn = SQLite           - corresponds to the dbd driver
+ user = username        - the user context to use
+ password = password    - the password for that context
+
+When using ODBC with a user level DSN or a dynamic connection, you
+should add the following items:
+
+ driver = SQL Server
+ server = localhost,1234 - (host,port)
+
+When using PostgresSQL (Pg), you can add the following items:
+
+ port = 5432
+ host = localhost
+ sslmode = something
+ options = something
+
+Or a service name, which is not compatible with the above.
+
+ service = service name
+
+There can be multiple stanzas, the first one that matches is used.
+
+=head1 METHODS
+
+=head2 opendb($database)
+
+This method makes the connection to the database. It takes these parameters:
+
+=over 4
+
+=item B<$database>
+
+The name of the database. This is defined in the database.ini file.
+
+=back
+
+=head2 dbix_exceptions($error)
+
+This method converts the internal DBIx::Class exceptions into a XAS exception.
+It takes these parameters:
+
+=over 4
+
+=item B<$error>
+
+The error string supplied by DBIx::Class
+
+=back
+
+=head2 filter_loaded_credentials($class, $config, $connect_args)
+
+This method is an override for the one provided by L<DBIx::Class::Schema::Config|https://metacpan.org/pod/DBIx::Class::Schema::Config>.
+It sets various defaults to be used when connecting to certain databases.
+There are defaults for SQLite, PostgreSQL and ODBC connections. The following
+parameters are supplied from DBIx::Class::Schema::Config.
+
+=over 4
+
+=item B<$class>
+
+=item B<$config>
+
+=item B<$connecti_args>
+
+=back
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<XAS|XAS>
+
+=item L<DBIx::Class::Schema::Config|https://metacpan.org/pod/DBIx::Class::Schema::Config>
+
+=back
+
+=head1 AUTHOR
+
+Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (c) 2014 Kevin L. Esteb
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.8 or,
+at your option, any later version of Perl 5 you may have available.
+
+See L<http://dev.perl.org/licenses/> for more information.
+
+=cut
+

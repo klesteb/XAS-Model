@@ -236,15 +236,11 @@ on the table name, which is defined by the modules name. So the module
 'ETL::Model::Database::Progress::ActOther' will have a constant named
 'ActOther' that refers to the module.
 
-=over 4
+B<WARNING>
 
-=item Warning
-
-If you have multiple tables named the same thing in differant schemas
-and load all the schemas at once, this constant will refer to the last
-loaded table defination.
-
-=back
+    If you have multiple tables named the same thing in differant schemas
+    and load all the schemas at once, this constant will refer to the last
+    loaded table defination.
 
 =head2 tables
 
@@ -273,9 +269,9 @@ Example
 
 =over 4
 
-=item L<https://metacpan.org/pod/DBIx::Class|DBIx::Class>
-
 =item L<XAS|XAS>
+
+=item L<DBIx::Class|https://metacpan.org/pod/DBIx::Class>
 
 =back
 
