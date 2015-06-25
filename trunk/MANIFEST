@@ -6,6 +6,7 @@ bin/xas-pg-remove-data
 Changes
 etc/database.ini
 lib/XAS/Apps/Database/Schema.pm
+lib/XAS/Docs/Model/Installation.pm
 lib/XAS/Model.pm
 lib/XAS/Model/DBM.pm
 lib/XAS/Model/Database.pm
