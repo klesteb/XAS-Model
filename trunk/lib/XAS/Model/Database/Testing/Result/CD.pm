@@ -1,4 +1,5 @@
-package XAS::Model::Database::Testing::Result::CD;
+package # hide from CPAN
+  XAS::Model::Database::Testing::Result::CD;
 
 use strict;
 use warnings;

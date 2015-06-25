@@ -1,4 +1,5 @@
-package XAS::Model::Database::Testing::ResultSet::Artist;
+package # hide from CPAN
+  XAS::Model::Database::Testing::ResultSet::Artist;
 
 use strict;
 use warnings;

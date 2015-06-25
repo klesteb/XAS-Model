@@ -275,7 +275,7 @@ EOC
 
 my $builder = $class->new(
     module_name         => 'XAS-Model',
-    license             => 'perl',
+    license             => 'artistic_2',
     dist_author         => q{Kevin L. Esteb <kevin@kesteb.us>},
     dist_version_from   => 'lib/XAS/Model.pm',
     release_status      => 'stable',

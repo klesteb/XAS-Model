@@ -1,28 +1,19 @@
 Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
 Maintainer: Kevin L. Esteb <kevin@kesteb.us>
-Source: http://search.cpan.org/dist/XAS/
-Name: XAS
+Source: http://scm.kesteb.us/git/XAS-Model
+Name: XAS-Model
 
 Files: *
 Copyright: Kevin L. Esteb <kevin@kesteb.us>
-License: Artistic or GPL-1+
+License: Artistic 2.0
 
 Files: debian/*
 Copyright: 2013, Kevin L. Esteb <kevin@kesteb.us>
-License: Artistic or GPL-1+
+License: Artistic 2.0
 
-License: Artistic
+License: Artistic 2.0
  This program is free software; you can redistribute it and/or modify
- it under the terms of the Artistic License, which comes with Perl.
+ it under the terms of the Artistic License 2.0.
  .
  On Debian GNU/Linux systems, the complete text of the Artistic License
- can be found in `/usr/share/common-licenses/Artistic'.
-
-License: GPL-1+
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 1, or (at your option)
- any later version.
- .
- On Debian GNU/Linux systems, the complete text of version 1 of the
- General Public License can be found in `/usr/share/common-licenses/GPL-1'.
+ can be found in `/usr/share/common-licenses/Artistic-2.0'.
