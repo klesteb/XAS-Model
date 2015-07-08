@@ -285,6 +285,12 @@ my $builder = $class->new(
     build_requires => {
         'Test::More' => 0,
     },
+    meta_add => {
+        resources => {
+            homepage   => 'http://scm.kesteb.us/trac',
+            repository => 'http://scm.kesteb.us/git/XAS-Model',
+        },
+    },
     add_to_cleanup     => [ 'XAS-Model-*' ],
     create_makefile_pl => 'traditional',
     install_path       => $install_path,
