@@ -3,7 +3,8 @@ use warnings FATAL => 'all';
 use Module::Build;
 
 my $requires = {
-    'XAS' => '0.08',
+    'perl' => 5.008_08,
+    'XAS'  => '0.08',
     'DBIx::Class' => '0.08196',
     'DBIx::Class::Schema::Config' => '0.001010',
     'DBIx::Class::OptimisticLocking' => '0.02',
