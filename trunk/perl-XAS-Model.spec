@@ -1,5 +1,5 @@
 Name:           perl-XAS-Model
-Version:        0.01
+Version:        0.02
 Release:        1%{?dist}
 Summary:        A database abstraction layer
 License:        Artistic 2.0

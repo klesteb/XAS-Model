@@ -274,7 +274,7 @@ my $class = Module::Build->subclass(code => <<'EOC');
 EOC
 
 my $builder = $class->new(
-    module_name         => 'XAS-Model',
+    module_name         => 'XAS::Model',
     license             => 'artistic_2',
     dist_author         => q{Kevin L. Esteb <kevin@kesteb.us>},
     dist_version_from   => 'lib/XAS/Model.pm',
