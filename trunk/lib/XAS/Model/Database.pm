@@ -12,6 +12,7 @@ use XAS::Class
   base       => 'XAS::Base',
   constants  => 'DELIMITER PKG REFS ARRAY',
   filesystem => 'File',
+  utils      => ':validation',
   exports => {
     hooks => {
       schema => [ \&_schema, 1 ],
@@ -66,7 +67,7 @@ sub table {
 
 sub tables {
     my $self = shift;
-    my ($tables, $depth) = $self->validate_params(\@_, [
+    my ($tables, $depth) = validate_params(\@_, [
         { type     => SCALAR | ARRAYREF },
         { optional => 1, default => 3 },
     ]);
@@ -104,7 +105,7 @@ sub tables {
 
 sub schemas {
     my $self = shift;
-    my ($schemas) = $self->validate_params(\@_, [
+    my ($schemas) = validate_params(\@_, [
         { type => SCALAR | ARRAYREF },
     ]);
 
