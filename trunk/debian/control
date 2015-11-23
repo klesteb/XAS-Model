@@ -2,15 +2,17 @@ Source: libxas-model-perl
 Section: perl
 Priority: optional
 Build-Depends: debhelper (>= 7), perl
-Maintainer: kevin l. esteb <kevin@kesteb.us>
+Maintainer: Kevin L. Esteb <kevin@kesteb.us>
 Standards-Version: 3.9.4
 Homepage: http://scm.kesteb.us/trac/
 
 Package: libxas-model-perl
 Architecture: all
 Depends: ${misc:Depends}, ${perl:Depends}
-Description: Middelware for Perl
+Description: Middleware for Datacenter Operations - Database Abstraction Layer 
  .
- XAS is middleware for Perl. It provides standardized methods, modules
- and philosophy for constructing large distributed applications. These
- module defines a database abstraction layer.
+ XAS is Middleware for Datacenter Operations. It provides standardized 
+ methods, modules and philosophy for constructing large distributed 
+ applications that are the backbone of your operations center. 
+ .
+ This package defines the database abstraction layer.
