@@ -16,6 +16,10 @@ The database abstraction layer is built upon L<DBIx::Class|https://metacpan.org/
 which is robust ORM for Perl. The modules provided try to make working with 
 databases easier.
 
+=head1 UTILITIES
+
+These utility procedures are provided with this package.
+
 =head2 xas-create-schema
 
 This procedure will create a database schema. by default this is for SQLite. 
@@ -33,7 +37,7 @@ This procedure will extract global data from a PostgreSQL dump file.
 =head2 xas-pg-remove-data
 
 This procedure will remove the data elements from a PostgreSQL dump file. This
-is usefull to recreate the database schema.
+is usefull for recreating a database schema.
 
 =head1 SEE ALSO
 
