@@ -31,12 +31,12 @@
 #
 
 use lib "../lib";
-use XAS::Apps::Base::ExtractGlobals;
+use XAS::Apps::Database::ExtractGlobals;
 
 main: {
 
-    my $app = XAS::Apps::Base::ExtractGlobals->new(
-        -throws  => 'pg_extract_global',
+    my $app = XAS::Apps::Database::ExtractGlobals->new(
+        -throws  => 'xas-pg-extract-global',
     );
 
     exit $app->run();

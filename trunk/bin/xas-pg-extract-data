@@ -31,12 +31,12 @@
 #
 
 use lib "../lib";
-use XAS::Apps::Base::ExtractData;
+use XAS::Apps::Database::ExtractData;
 
 main: {
 
-    my $app = XAS::Apps::Base::ExtractData->new(
-        -throws  => 'pg_extract_data',
+    my $app = XAS::Apps::Database::ExtractData->new(
+        -throws  => 'xas-pg-extract-data',
     );
 
     exit $app->run();

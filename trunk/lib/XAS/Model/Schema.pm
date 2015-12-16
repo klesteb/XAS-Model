@@ -268,6 +268,8 @@ parameters are supplied from DBIx::Class::Schema::Config.
 
 =over 4
 
+=item L<XAS::Model|XAS::Model>
+
 =item L<XAS|XAS>
 
 =item L<DBIx::Class::Schema::Config|https://metacpan.org/pod/DBIx::Class::Schema::Config>
@@ -280,11 +282,10 @@ Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2014 Kevin L. Esteb
+Copyright (c) 2012-2015 Kevin L. Esteb
 
 This is free software; you can redistribute it and/or modify it under
 the terms of the Artistic License 2.0. For details, see the full text
 of the license at http://www.perlfoundation.org/artistic_license_2_0.
 
 =cut
-

@@ -186,7 +186,7 @@ XAS::Model::Database - A class to load database schemas
 
 =head1 DESCRIPTION
 
-This module loads DBIx::Class table definations and defines a path for
+This module loads DBIx::Class table definitions and defines a path for
 the database.ini configuration file. It can also load shortcut constants
 for table definations. 
 
@@ -213,12 +213,12 @@ Example
 
 The difference is that in the first example you are only loading the 
 "Master" constant into your module. The second example loads the constants 
-"Master" and "Detail". The ":all" qualifer would load all the defined
+"Master" and "Detail". The ":all" qualifier would load all the defined
 constants. 
 
 =head1 HOOKS
 
-The following hooks are defined to load table definations and define
+The following hooks are defined to load table definitions and define
 constants. The order that they are called is important, i.e. 'schema' must
 come before 'table'.
 
@@ -232,7 +232,7 @@ it by using 'ETL::Model::Database::Progress'.
  
 =head2 table
 
-This will define a constant for a table defination. This constant is based
+This will define a constant for a table definition. This constant is based
 on the table name, which is defined by the modules name. So the module
 'ETL::Model::Database::Progress::ActOther' will have a constant named
 'ActOther' that refers to the module.
@@ -241,34 +241,19 @@ B<WARNING>
 
     If you have multiple tables named the same thing in differant schemas
     and load all the schemas at once, this constant will refer to the last
-    loaded table defination.
+    loaded table definition.
 
 =head2 tables
 
 Does the same thing as 'table'.
 
-=head1 METHODS
-
-=head2 opendb($database)
-
-This method provides the defaults necessary to call the DBIx::Class::Schema 
-connect() method. It takes one parameter.
-
-=over 4
-
-=item B<$database>
-
-The name of a configuration item suitable for DBIx::Class::Schema::Configure.
-
-Example
-
-    my $handle = XAS::Model::Database->opendb('database');
-
-=back
-
 =head1 SEE ALSO
 
 =over 4
+
+=item L<XAS::Model::Database|XAS::Model::Database>
+
+=item L<XAS::Model|XAS::Model>
 
 =item L<XAS|XAS>
 
@@ -282,7 +267,7 @@ Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2014 Kevin L. Esteb
+Copyright (c) 2012-2015 Kevin L. Esteb
 
 This is free software; you can redistribute it and/or modify it under
 the terms of the Artistic License 2.0. For details, see the full text

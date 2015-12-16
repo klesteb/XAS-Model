@@ -57,14 +57,14 @@ sub main {
 sub options {
     my $self = shift;
 
-    $self->{file}   = '';
-    $self->{table}  = '';
-    $self->{schema} = '';
+    $self->{'file'}   = '';
+    $self->{'table'}  = '';
+    $self->{'schema'} = '';
 
     return {
-        'file=s'   => \$self->{file},
-        'table=s'  => \$self->{table},
-        'schema=s' => \$self->{schema},
+        'file=s'   => \$self->{'file'},
+        'table=s'  => \$self->{'table'},
+        'schema=s' => \$self->{'schema'},
     };
 
 }
@@ -118,7 +118,7 @@ Defines the database schema to use.
 
 =over 4
 
-=item bin/xas-pg-extract-data
+=item L<XAS::Model|XAS::Model>
 
 =item L<XAS|XAS>
 
@@ -130,7 +130,7 @@ Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2012 by Kevin L. Esteb
+Copyright (c) 2012-2015 by Kevin L. Esteb
 
 This is free software; you can redistribute it and/or modify it under
 the terms of the Artistic License 2.0. For details, see the full text

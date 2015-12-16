@@ -29,12 +29,12 @@
 #
 
 use lib "../lib";
-use XAS::Apps::Base::RemoveData;
+use XAS::Apps::Database::RemoveData;
 
 main: {
     
-    my $app = XAS::Apps::Base::RemoveData->new(
-        -throws  => 'pg_remove_data',
+    my $app = XAS::Apps::Database::RemoveData->new(
+        -throws  => 'xas-pg-remove-data',
     );
 
     exit $app->run();

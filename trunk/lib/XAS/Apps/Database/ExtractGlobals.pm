@@ -55,12 +55,12 @@ sub main {
 sub options {
     my $self = shift;
 
-    $self->{file} = '';
-    $self->{database} = '';
+    $self->{'file'} = '';
+    $self->{'database'} = '';
 
     return {
-        'file=s'     => \$self->{file},
-        'database=s' => \$self->{database},
+        'file=s'     => \$self->{'file'},
+        'database=s' => \$self->{'database'},
     };
 
 }
@@ -110,7 +110,7 @@ Defines which database to extract data from.
 
 =over 4
 
-=item bin/xas-pg-extract-global
+=item L<XAS::Model|XAS::Model>
 
 =item L<XAS|XAS>
 
@@ -122,7 +122,7 @@ Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2012 by Kevin L. Esteb
+Copyright (c) 2012-2015 by Kevin L. Esteb
 
 This is free software; you can redistribute it and/or modify it under
 the terms of the Artistic License 2.0. For details, see the full text

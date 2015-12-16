@@ -660,9 +660,11 @@ The record used to update the table entry.
 
 =over 4
 
-=item <https://metacpan.org/pod/DBIx::Class|DBIx::Class>
+=item L<XAS::Model|XAS::Model>
 
 =item L<XAS|XAS>
+
+=item <https://metacpan.org/pod/DBIx::Class|DBIx::Class>
 
 =back
 
@@ -672,7 +674,7 @@ Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2014 Kevin L. Esteb
+Copyright (c) 2012-2015 Kevin L. Esteb
 
 This is free software; you can redistribute it and/or modify it under
 the terms of the Artistic License 2.0. For details, see the full text

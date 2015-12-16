@@ -45,18 +45,18 @@ sub main {
 sub options {
     my $self = shift;
 
-    $self->{dbtype}    = 'SQLite';
-    $self->{revision}  = '0.01';
-    $self->{directory} = './sql/';
-    $self->{database}  = 'testing';
-    $self->{schema}    = 'XAS::Model::Database::Testing';
+    $self->{'dbtype'}    = 'SQLite';
+    $self->{'revision'}  = '0.01';
+    $self->{'directory'} = './sql/';
+    $self->{'database'}  = 'testing';
+    $self->{'schema'}    = 'XAS::Model::Database::Testing';
 
     return {
-        'dbtype=s'    => \$self->{dbtype},
-        'revision=s'  => \$self->{revision},
-        'directory=s' => \$self->{directory},
-        'database=s'  => \$self->{database},
-        'schema=s'    => \$self->{schema},
+        'dbtype=s'    => \$self->{'dbtype'},
+        'revision=s'  => \$self->{'revision'},
+        'directory=s' => \$self->{'directory'},
+        'database=s'  => \$self->{'database'},
+        'schema=s'    => \$self->{'schema'},
     };
 
 }
@@ -84,7 +84,8 @@ XAS::Apps::Database::Schema - Create a database schema
 =head1 DESCRIPTION
 
 This module will create a schema for the XAS database. It inherits from
-L<XAS::Lib::App|XAS::Lib::App>. Please see that module for additional documentation.
+L<XAS::Lib::App|XAS::Lib::App>. Please see that module for additional 
+documentation.
 
 =head1 OPTIONS
 
@@ -112,7 +113,7 @@ The directory to write the schema into. Defaults to "./sql.".
 
 =over 4
 
-=item bin/xas-create-schema
+=item L<XAS::Model|XAS::Model>
 
 =item L<XAS|XAS>
 
@@ -124,7 +125,7 @@ Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2012 by Kevin L. Esteb
+Copyright (c) 2012-2015 by Kevin L. Esteb
 
 This is free software; you can redistribute it and/or modify it under
 the terms of the Artistic License 2.0. For details, see the full text
