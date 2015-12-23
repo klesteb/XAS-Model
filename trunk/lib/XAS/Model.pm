@@ -25,19 +25,67 @@ These utility procedures are provided with this package.
 This procedure will create a database schema. by default this is for SQLite. 
 Others databases may be defined on the command line.
 
+=over 4
+
+=item B<xas-create-schema --help>
+
+This will display a brief help screen on command options.
+
+=item B<xas-create-schema --manual>
+
+This will display the utilities man page.
+
+=back
+
 =head2 xas-pg-extract-data
 
 This procedure will extract the data from a PostgreSQL dump file. This is done
 by table, which can be defined on the command line.
 
+=over 4
+
+=item B<xas-pg-extract-data --help>
+
+This will display a brief help screen on command options.
+
+=item B<xas-pg-extract-data --manual>
+
+This will display the utilities man page.
+
+=back
+
 =head2 xas-pg-extract-global
 
 This procedure will extract global data from a PostgreSQL dump file.
+
+=over 4
+
+=item B<xas-pg-extract-global --help>
+
+This will display a brief help screen on command options.
+
+=item B<xas-pg-extract-global --manual>
+
+This will display the utilities man page.
+
+=back
 
 =head2 xas-pg-remove-data
 
 This procedure will remove the data elements from a PostgreSQL dump file. This
 is usefull for recreating a database schema.
+
+=over 4
+
+=item B<xas-pg-remove-data --help>
+
+This will display a brief help screen on command options.
+
+=item B<xas-pg-remove-data --manual>
+
+This will display the utilities man page.
+
+=back
 
 =head1 SEE ALSO
 
