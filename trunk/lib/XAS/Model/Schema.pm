@@ -88,60 +88,64 @@ sub filter_loaded_credentials {
     $config->{dbi_attr}->{PrintError} = 0;
     $config->{dbi_attr}->{RaiseError} = 1;
 
-    if ($config->{dsn} eq 'SQLite') {
+    if (defined($config->{'dsn'})) {
 
-        $config->{dbi_attr}->{sqlite_use_immediate_transaction} = 1;
-        $config->{dbi_attr}->{sqlite_see_if_its_a_number} = 1;
-        $config->{dbi_attr}->{on_connect_call} = 'use_foreign_keys';
+        if ($config->{dsn} eq 'SQLite') {
 
-        $config->{dsn} = "dbi:$config->{dsn}:dbname=$config->{dbname}";
+            $config->{dbi_attr}->{sqlite_use_immediate_transaction} = 1;
+            $config->{dbi_attr}->{sqlite_see_if_its_a_number} = 1;
+            $config->{dbi_attr}->{on_connect_call} = 'use_foreign_keys';
 
-    } elsif ($config->{dsn} eq 'ODBC') {
+            $config->{dsn} = "dbi:$config->{dsn}:dbname=$config->{dbname}";
 
-        # http://dolio.lh.net/~apw/doc/HOWTO/HOWTO-Connect_Perl_to_SQL_Server.pdf
-        #
-        # a user level DSN or a dynamic connection needs the following:
-        #
-        # dbi:ODBC:Driver={driver};Server=server;Database=dbname
-        #
-        # a system level DSN needs the following:
-        #
-        # dbi:ODBC:dbname
-        # 
+        } elsif ($config->{dsn} eq 'ODBC') {
 
-        if (defined($config->{driver})) {
+            # http://dolio.lh.net/~apw/doc/HOWTO/HOWTO-Connect_Perl_to_SQL_Server.pdf
+            #
+            # a user level DSN or a dynamic connection needs the following:
+            #
+            # dbi:ODBC:Driver={driver};Server=server;Database=dbname
+            #
+            # a system level DSN needs the following:
+            #
+            # dbi:ODBC:dbname
+            # 
 
-            $config->{dsn} = sprintf(
-                "dbi:%s:Driver={%s};Database=%s;Server=%s",
-                $config->{dsn}, $config->{driver},
-                $config->{dbname}, $config->{server}
-            );
+            if (defined($config->{driver})) {
 
-        } else {
+                $config->{dsn} = sprintf(
+                    "dbi:%s:Driver={%s};Database=%s;Server=%s",
+                    $config->{dsn}, $config->{driver},
+                    $config->{dbname}, $config->{server}
+                );
 
-            $config->{dsn} = "dbi:$config->{dsn}:$config->{dbname}";
+            } else {
+
+                $config->{dsn} = "dbi:$config->{dsn}:$config->{dbname}";
    
-        }
+            }
 
-    } elsif ($config->{dsn} eq 'Pg') {
+        } elsif ($config->{dsn} eq 'Pg') {
 
-        unless (defined($config->{service})) {
+            unless (defined($config->{service})) {
 
-            $config->{dsn}  = "dbi:$config->{dsn}:dbname=$config->{dbname}";
-            $config->{dsn} .= ";host=$config->{host}" if (defined($config->{host}));
-            $config->{dsn} .= ";port=$config->{port}" if (defined($config->{port}));
-            $config->{dsn} .= ";options=$config->{options}" if (defined($config->{options}));
-            $config->{dsn} .= ";sslnode=$config->{sslmode}" if (defined($config->{sslmode}));
+                $config->{dsn}  = "dbi:$config->{dsn}:dbname=$config->{dbname}";
+                $config->{dsn} .= ";host=$config->{host}" if (defined($config->{host}));
+                $config->{dsn} .= ";port=$config->{port}" if (defined($config->{port}));
+                $config->{dsn} .= ";options=$config->{options}" if (defined($config->{options}));
+                $config->{dsn} .= ";sslnode=$config->{sslmode}" if (defined($config->{sslmode}));
+
+            } else {
+
+                $config->{dsn} = "dbi:$config->{dsn}:service=$config->{service}";
+
+            }
 
         } else {
 
-            $config->{dsn} = "dbi:$config->{dsn}:service=$config->{service}";
+            $config->{dsn} = "dbi:$config->{dsn}:dbname=$config->{dbname}";
 
         }
-
-    } else {
-
-        $config->{dsn} = "dbi:$config->{dsn}:dbname=$config->{dbname}";
 
     }
 
