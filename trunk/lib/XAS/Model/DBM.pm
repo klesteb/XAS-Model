@@ -225,13 +225,15 @@ sub create_record {
 
         # create the record
 
-        $class->create($schema, $data);
+        my $result = $class->create($schema, $data);
 
         while (my ($key, $value) = each(%$record)) {
 
             $rec->{$key} = $value;
 
         }
+        
+        $rec->{'id'} = $result->id;
 
     });
 
@@ -246,7 +248,7 @@ sub delete_record {
 
     my $data = undef;
     my $criteria = {
-        id => $record->{id}
+        id => $record->{'id'}
     };
 
     $schema->txn_do(sub { 
@@ -277,7 +279,7 @@ sub update_record {
     my $data = undef;
     my @columns = $class->columns;
     my $criteria = {
-        id => $record->{id}
+        id => $record->{'id'}
     };
 
     # retrieve the record
@@ -314,7 +316,7 @@ sub update_record {
             }
 
         }
-
+        
     });
 
     return $data;
