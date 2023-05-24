@@ -1,4 +1,4 @@
-XAS Model is Copyright (c) 2012-2015 Kevin L. Esteb 
+XAS Model is Copyright (c) 2012-2023 Kevin L. Esteb 
 
 XAS is a set of modules, procedures and practices to help write
 consistent Perl5 code for a datacenter operations environment. For the most 
@@ -13,11 +13,39 @@ This package provides the database abstraction layer. It is built on the
 ORM provided by DBIx::Class. There are procedures to create a database
 schema, along with the ability to parse PostgreSQL backup files. 
 
-Installation instructions can be found here:
+INSTALLATION
 
-    http://scm.kesteb.us/trac/wiki/XasDocsModelInstallation
+On Unix like systems, using pure Perl, run the following commands:
 
-Extended documentation is available at: http://scm.kesteb.us/trac
+    # perl Build.PL --installdirs site
+    # ./Build
+    # ./Build test
+    # ./Build install
+
+If you are DEB based, Debian build files have been provided. If you have a 
+Debian build environment, then you can do the following:
+
+    # debian/rules build
+    # debian/rules clean
+    # dpkg -i ../libxas-model-perl_0.03-1_all.deb
+
+On Windows, do the following:
+
+    > perl Build.PL
+    > Build
+    > Build test
+    > Build install
+
+It is recommended that you use Strawberry Perl, ActiveState Perl doesn't 
+have all of the necessary modules available. 
+
+DOCUMENTATION
+
+Documentation can be found using the following command:
+
+    perldoc XAS::Model
+    
+And just follow the links.
 
 LICENSE INFORMATION
 

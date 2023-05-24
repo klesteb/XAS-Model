@@ -22,7 +22,7 @@ These utility procedures are provided with this package.
 
 =head2 xas-create-schema
 
-This procedure will create a database schema. by default this is for SQLite. 
+This procedure will create a database schema. By default this is for SQLite. 
 Others databases may be defined on the command line.
 
 =over 4
@@ -115,7 +115,7 @@ Kevin L. Esteb, E<lt>kevin@kesteb.usE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2012-2019 Kevin L. Esteb
+Copyright (c) 2012-2023 Kevin L. Esteb
 
 This is free software; you can redistribute it and/or modify it under
 the terms of the Artistic License 2.0. For details, see the full text
